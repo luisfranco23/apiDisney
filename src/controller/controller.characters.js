@@ -10,9 +10,25 @@ const registerCharacter = async (data) => {
         weigth: data.weigth,
         history: data.history,
         movieId: data.movieId
+    },{
+        attributes: {
+            exclude: ["createdAt", "updatedAt"]
+        }
     })
     return newCharacter
 }
 
+const getAllCharacters = async () => {
+    const data = await Characters.findAll({
+        attributes: {
+            exclude: ["createdAt","updatedAt","age","weigth","history","movieId"]
+        }
+    })
+    return data
+}
 
-module.exports = {registerCharacter}
+
+module.exports = {
+    registerCharacter,
+    getAllCharacters
+}

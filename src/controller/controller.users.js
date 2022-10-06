@@ -18,7 +18,7 @@ const registerUser = async (data) => {
         nameUser: data.nameUser,
         email: data.email,
         password : hashPassword(data.password),
-        roleId: "e1f6bbfa-19a0-4f2a-8a73-74318cb58cf4",
+        roleId: data.roleId ? data.roleId : "45a95ae7-db30-43d8-a344-0e4bfea9b933",
     })
     return newUser
 }

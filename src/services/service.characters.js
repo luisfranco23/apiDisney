@@ -1,4 +1,4 @@
-const { registerCharacter } = require("../controller/controller.characters")
+const { registerCharacter, getAllCharacters } = require("../controller/controller.characters")
 
 
 
@@ -17,6 +17,17 @@ const newRegisterCharacter = (req, res ) => {
     }
 }
 
+const getCharacters = (req, res) => {
+    getAllCharacters()
+    .then(response => {
+        res.status(200).json({length: response.length, response})
+    })
+    .catch(err => {
+        res.status(400).json({status: "failed", err})
+    })
+}
+
 module.exports = {
-    newRegisterCharacter
+    newRegisterCharacter,
+    getCharacters
 }
