@@ -22,9 +22,9 @@ const Characters = db.define('characters',{
     urlImage: {
         allowNull: false,
         type: DataTypes.STRING,
-        validate: {
-            isUrl: true
-        },
+        // validate: {
+        //     isUrl: true
+        // },
         field: "url_image"
     },
     weigth: {

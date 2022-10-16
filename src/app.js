@@ -3,10 +3,15 @@ const initModels = require('./models/initModels')
 initModels()
 
 const app = express()
+const swaggerUi = require("swagger-ui-express")
 
 //routes
 const routerUsers = require('./routes/router.user').router
 const routerauth = require('./auth/auth.route').route
+const routerQuery = require('./routes/route.query').router
+const routerMovies = require('./routes/router.movies').router
+
+const swaggerDoc = require('./swagger.json')
 
 app.use(express.json())
 
@@ -26,6 +31,9 @@ db.sync()
 
 app.use('/api/v1', routerUsers)
 app.use('/api/v1',routerauth)
+app.use('/api/v1', routerQuery)
+app.use('/api/v1', routerMovies)
+app.use("/api/v1/documentation", swaggerUi.serve, swaggerUi.setup(swaggerDoc))
 
 
 app.listen(PORT, () => {
