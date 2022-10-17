@@ -1,7 +1,5 @@
--> add environment variables,example
+# route http://localhost:3000/api/v1/documentation
 
-PORT= 
-DB_HOST=
-DB_USERNAME=
-DB_PASSWORD=
-DB=
+Alkemy Campus
+
+Con el fin de practicar y demostrar mis conocimientos
