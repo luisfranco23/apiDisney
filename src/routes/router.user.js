@@ -7,21 +7,18 @@ const {
   getCharacter,
   deteleCharacter,
 } = require("../services/service.characters");
-const { registerNewGender } = require("../services/service.gender");
 const { getAllUsers, role, register } = require("../services/services.users");
 require("../auth/auth.middleware")(passport);
 
 const router = require("express").Router();
 
-router.route("/users").get( passport.authenticate("jwt", {session: false}),getAllUsers).post(register);
+router.route("/users").get( passport.authenticate("jwt", {session: false}),getAllUsers)
+
+router.post('/users/register',register);
 
 router
-  .route("/role")
+  .route("/users/role")
   .post(passport.authenticate("jwt", { session: false }), role);
-
-router.route("/genders")
-  .post(passport.authenticate("jwt",  {session: false}), upload.single('image'), registerNewGender)
-
 
 router
   .route("/characters")

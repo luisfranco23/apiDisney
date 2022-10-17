@@ -1,0 +1,1247 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "API Disney - API REST 1.0",
+    "description": "Api desarollada con node js y express donde entrega todo lo relacionado con las peliculas y personajes de disney, es necesario regitrarse para obtener el token (jwt) y acceder a las rutas, es posible subir imagenes y realizar las peticiones requeridad (CRUD).",
+    "contact": {
+      "email": "lafrancol05@gmail.com"
+    },
+    "version": "1.0.0"
+  },
+  "servers": [
+    {
+      "url": "http://localhost:3000/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "users",
+      "description": "Operaciones acerca de usuarios"
+    },
+    {
+      "name": "characters",
+      "description": "Operaciones acerca de personajes"
+    },
+    {
+      "name": "movies",
+      "description": "Operations about user"
+    }
+  ],
+  "paths": {
+    "/users/register": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "registrar nuevo usuario",
+        "description": "Iniciar sesion de usuario y obtener el token",
+        "requestBody": {
+          "description": "token de usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/login"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/login"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/login": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "inicar sesion de usuario",
+        "description": "Iniciar sesion de usuario y obtener el token",
+        "requestBody": {
+          "description": "token de usuario",
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Succes"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users/role": {
+      "post": {
+        "tags": [
+          "users"
+        ],
+        "summary": "crear nuevo rol",
+        "description": "crear un nuevo rol",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Nuevo rol creado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameRole": {
+                    "type": "string",
+                    "example": "guest"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/default"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/users": {
+      "get": {
+        "tags": [
+          "users"
+        ],
+        "summary": "obener todos los usuarios",
+        "description": "obtener usuarios",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/characters/{id}": {
+      "get": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "obener detalle de usuario",
+        "description": "obener detalle de usuario",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "Actualizar personaje por id",
+        "description": "Actualizar personaje por id",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Personaje actualizado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameCharacter": {
+                    "type": "string"
+                  },
+                  "urlImage": {
+                    "type": "string",
+                    "example": "https://misitio.com/uploads/myimage.png"
+                  },
+                  "age": {
+                    "type": "string",
+                    "example": "2022-10-17T00:00:00.000Z"
+                  },
+                  "weigth": {
+                    "type": "integer"
+                  },
+                  "history": {
+                    "type": "string"
+                  },
+                  "movieId": {
+                    "type": "integer",
+                    "example": "1a1bde50-b10a-4e10"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "Eliminar personaje",
+        "description": "Eliminar personaje",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid pet value"
+          }
+        }
+      }
+    },
+    "/characters": {
+      "get": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "obener todos los personajes",
+        "description": "obtener todos los personajes",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "crear nuevo personaje",
+        "description": "crear un personaje",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Nuevo personaje creado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameCharacter": {
+                    "type": "string"
+                  },
+                  "urlImage": {
+                    "type": "string",
+                    "example": "https://misitio.com/uploads/myimage.png"
+                  },
+                  "age": {
+                    "type": "string",
+                    "example": "2022-10-17T00:00:00.000Z"
+                  },
+                  "weigth": {
+                    "type": "integer"
+                  },
+                  "history": {
+                    "type": "string"
+                  },
+                  "movieId": {
+                    "type": "integer",
+                    "example": "1a1bde50-b10a-4e10"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/{id}": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "obener detalle de pelicula / serie",
+        "description": "obener detalle de pelicula / serie",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/Get"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "patch": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Actualizar pelicula por id",
+        "description": "Actualizar pelicula por id",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Pelicula actualizado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "urlImage": {
+                    "type": "string",
+                    "example": "https://misitio.com/uploads/myimage.png"
+                  },
+                  "creationDate": {
+                    "type": "string",
+                    "example": "2022-10-17T00:00:00.000Z"
+                  },
+                  "qualification": {
+                    "type": "integer"
+                  },
+                  "genderId": {
+                    "type": "integer",
+                    "example": "1a1bde50-b10a-4e10"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "Eliminar pelicula / serie",
+        "description": "Eliminar pelicula / serie",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "id",
+            "in": "path",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "400": {
+            "description": "Invalid pet value"
+          }
+        }
+      }
+    },
+    "/search/characters[title=value]": {
+      "get": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "obtener personaje por pelicula / serie",
+        "description": "obtener personaje por pelicula / serie",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/characters[age=value]": {
+      "get": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "obtener personajes por edad",
+        "description": "obtener personajes por edad",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "age",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/characters[name=value]": {
+      "get": {
+        "tags": [
+          "characters"
+        ],
+        "summary": "obtener personaje por nombre",
+        "description": "obtener personaje por nombre",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "name",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "obener todos los usuarios",
+        "description": "obtener usuarios",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      },
+      "post": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "crear nueva pelicula / serie",
+        "description": "crear nueva pelicula / serie",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Nuevo pelicula creada",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "title": {
+                    "type": "string"
+                  },
+                  "urlImage": {
+                    "type": "string",
+                    "example": "https://misitio.com/uploads/myimage.png"
+                  },
+                  "creationDate": {
+                    "type": "string",
+                    "example": "2022-10-17T00:00:00.000Z"
+                  },
+                  "qualification": {
+                    "type": "integer"
+                  },
+                  "genderId": {
+                    "type": "integer",
+                    "example": "1a1bde50-b10a-4e10"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/movies/genders": {
+      "post": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "crear nuevo genero",
+        "description": "crear nuevo genero",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "description": "Nuevo genero creado",
+          "content": {
+            "application/json": {
+              "schema": {
+                "type": "object",
+                "properties": {
+                  "nameGender": {
+                    "type": "string"
+                  }
+                }
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "properties": {
+                    "id": {
+                      "type": "string"
+                    },
+                    "nameGender": {
+                      "type": "string"
+                    }
+                  }
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/movies[title=value]": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "obtener movie por titulo",
+        "description": "obtener movie por titulo",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/movies[gender=value]": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "obtener movie por genero",
+        "description": "obtener movie por genero",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "gender",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/search/movies[order=ASC/DESC]": {
+      "get": {
+        "tags": [
+          "movies"
+        ],
+        "summary": "obtener movie ordenado",
+        "description": "obtener movie ordenado",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "header",
+            "description": "jwt",
+            "required": true,
+            "schema": {
+              "type": "string"
+            }
+          },
+          {
+            "name": "order",
+            "in": "query",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "allowReserved": true
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/defaultResponse"
+                }
+              }
+            }
+          },
+          "400": {
+            "description": "Invalid data",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/failed"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "User": {
+        "type": "object",
+        "properties": {
+          "email": {
+            "type": "string",
+            "example": "example@mail.com"
+          },
+          "password": {
+            "type": "string",
+            "example": "mypassword"
+          }
+        }
+      },
+      "Succes": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "succes"
+          },
+          "token": {
+            "type": "string",
+            "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjFhMWJkZTUwLWIxMGEtNGUxMC05ZW"
+          },
+          "type": {
+            "type": "string",
+            "example": "jwt"
+          }
+        }
+      },
+      "failed": {
+        "type": "object",
+        "properties": {
+          "status": {
+            "type": "string",
+            "example": "failed"
+          },
+          "err": {
+            "type": "string",
+            "example": "error secualize"
+          }
+        }
+      },
+      "Get": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1a1bde50-b10a-4e10"
+          },
+          "nameUser": {
+            "type": "string",
+            "example": "My name"
+          },
+          "email": {
+            "type": "string",
+            "example": "example@mail.com"
+          }
+        }
+      },
+      "default": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "example": "1a1bde50-b10a-4e10"
+          },
+          "nameRole": {
+            "type": "string",
+            "example": "guest"
+          }
+        }
+      },
+      "login": {
+        "type": "object",
+        "properties": {
+          "nameUser": {
+            "type": "string"
+          },
+          "email": {
+            "type": "string"
+          },
+          "password": {
+            "type": "string"
+          }
+        }
+      },
+      "defaultResponse": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string"
+          },
+          "name": {
+            "type": "string"
+          },
+          "url": {
+            "type": "string",
+            "example": "https://misitio.com/uploads/image.png"
+          }
+        }
+      }
+    }
+  }
+}

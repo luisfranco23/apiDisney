@@ -1,8 +1,0 @@
-{
-        "openapi": "3.0.1",
-        "info": {
-            "title": "API Rest Disney",
-            "version": "1.0.0",
-            "description": "Cuenta con toda la funcionaidad de un CRUD dando repuesta de todo tipo, ademas se esta usando autenticación con token jwt para las rutas progidas, carge de imagenes, consulta por parametros"
-        }
-}

@@ -64,7 +64,7 @@ const deteleCharacter = (req, res) => {
 const seacrhQueryName = (req, res) => {
     const name = req.query.name
     const age = req.query.age
-    const movie = req.query.movies
+    const movies = req.query.movies
     if (name != undefined) {
         seacrhName(name)
         .then(response => {
